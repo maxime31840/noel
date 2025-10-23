@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Décompte jusqu'à Noël 🎅🎄</title>
+  <title>Décompte jusqu'à Noël et Halloween 🎅🎃</title>
   <style>
     :root {
-      --accent: #fbbf24;
+      --accent-noel: #fbbf24;
+      --accent-halloween: #ff7518;
       --text-light: #f9fafb;
       --bg-dark: rgba(0,0,0,0.55);
     }
@@ -23,6 +24,7 @@
       color: var(--text-light);
       text-align: center;
       overflow-x: hidden;
+      overflow-y: auto; 
       background: url('./image/noel-background.jpg') no-repeat center center fixed;
       background-size: cover;
       display: flex;
@@ -42,11 +44,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
     header {
       width: 100%;
       background: rgba(0,0,0,0.6);
@@ -63,7 +60,7 @@
 
     header h2 {
       font-size: 1.4rem;
-      color: var(--accent);
+      color: var(--accent-noel);
       text-shadow: 0 0 8px rgba(251,191,36,0.5);
     }
 
@@ -77,14 +74,21 @@
       inset: 0;
       background: var(--bg-dark);
       z-index: 1;
-      animation: fadeIn 1.5s ease;
+      animation: fadeDown 1.5s ease;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      margin-top: 10rem;
+      margin-bottom: 8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4rem;
     }
 
     .container {
-      position: relative;
-      z-index: 2;
-      margin-top: 15rem;
-      margin-bottom: 5rem;
       padding: 2rem;
       border-radius: 1.5rem;
       backdrop-filter: blur(10px);
@@ -98,8 +102,13 @@
       font-size: clamp(1.5rem, 5vw, 2.5rem);
       margin-bottom: 1rem;
       font-weight: 600;
-      color: var(--accent);
+      color: var(--accent-noel);
       text-shadow: 0 0 10px rgba(251,191,36,0.6);
+    }
+
+    .halloween-title {
+      color: var(--accent-halloween);
+      text-shadow: 0 0 10px rgba(255,117,24,0.6);
     }
 
     p {
@@ -131,7 +140,11 @@
     .number {
       font-size: 2.2rem;
       font-weight: 700;
-      color: var(--accent);
+      color: var(--accent-noel);
+    }
+
+    .halloween-number {
+      color: var(--accent-halloween);
     }
 
     .label {
@@ -156,13 +169,14 @@
     }
 
     footer span {
-      color: var(--accent);
+      color: var(--accent-noel);
       text-shadow: 0 0 6px rgba(251,191,36,0.7);
     }
 
     @media (max-width: 480px) {
       .unit { width: 80px; padding: 0.7rem; }
       .number { font-size: 1.8rem; }
+      main { margin-top: 8rem; gap: 2rem; }
     }
   </style>
 </head>
@@ -170,26 +184,38 @@
   <div class="overlay"></div>
 
   <header>
-    <h2>🎄 Noël approche !</h2>
-    <p>Prépare ton chocolat chaud et compte les jours ✨</p>
+    <h2>🎄 Noël & 🎃 Halloween approchent !</h2>
+    <p>Prépare ton chocolat chaud... et ton déguisement ! ✨</p>
   </header>
 
-  <div class="container">
-    <h1>🎅 Compte à rebours avant Noël 🎄</h1>
-    <p>Le Père Noël polit déjà ses bottes… Voici combien de temps il te reste pour être sage :</p>
+  <main>
+    <div class="container">
+      <h1>🎅 Compte à rebours avant Noël 🎄</h1>
+      <p>Le Père Noël polit déjà ses bottes… Voici combien de temps il te reste pour être sage :</p>
 
-    <div class="countdown">
-      <div class="unit"><div class="number" id="months">--</div><div class="label">Mois</div></div>
-      <div class="unit"><div class="number" id="weeks">--</div><div class="label">Semaines</div></div>
-      <div class="unit"><div class="number" id="days">--</div><div class="label">Jours</div></div>
-      <div class="unit"><div class="number" id="hours">--</div><div class="label">Heures</div></div>
-      <div class="unit"><div class="number" id="minutes">--</div><div class="label">Minutes</div></div>
-      <div class="unit"><div class="number" id="seconds">--</div><div class="label">Secondes</div></div>
+      <div class="countdown">
+        <div class="unit"><div class="number" id="monthsNoel">--</div><div class="label">Mois</div></div>
+        <div class="unit"><div class="number" id="weeksNoel">--</div><div class="label">Semaines</div></div>
+        <div class="unit"><div class="number" id="daysNoel">--</div><div class="label">Jours</div></div>
+        <div class="unit"><div class="number" id="hoursNoel">--</div><div class="label">Heures</div></div>
+      </div>
     </div>
-  </div>
+
+    <div class="container">
+      <h1 class="halloween-title">🕸️ Compte à rebours avant Halloween 🎃</h1>
+      <p>Les chauves-souris s’entraînent à voler… Voici combien de temps il te reste avant la nuit terrifiante :</p>
+
+      <div class="countdown">
+        <div class="unit"><div class="number halloween-number" id="monthsHalloween">--</div><div class="label">Mois</div></div>
+        <div class="unit"><div class="number halloween-number" id="weeksHalloween">--</div><div class="label">Semaines</div></div>
+        <div class="unit"><div class="number halloween-number" id="daysHalloween">--</div><div class="label">Jours</div></div>
+        <div class="unit"><div class="number halloween-number" id="hoursHalloween">--</div><div class="label">Heures</div></div>
+      </div>
+    </div>
+  </main>
 
   <footer>
-    <p>© <span>2025</span> — Créé avec 🎅 par <span>Maxime</span> • Joyeux Noël 🎁</p>
+    <p>© <span>2025</span> — Créé avec 🎅 et 🎃 par <span>Maxime</span> • Joyeuses Fêtes ! 🎁</p>
   </footer>
 
 <script>
@@ -200,28 +226,45 @@
     return now > christmas ? new Date(year + 1, 11, 25, 0, 0, 0) : christmas;
   }
 
-  function updateCountdown() {
+  function getNextHalloween() {
     const now = new Date();
-    const christmas = getNextChristmas();
-    const diff = christmas - now;
-
-    const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44)); // mois moyens
-    const weeks = Math.floor((diff / (1000 * 60 * 60 * 24 * 7)) % 4.35);
-    const days = Math.floor((diff / (1000 * 60 * 60 * 24)) % 7);
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById('months').textContent = months;
-    document.getElementById('weeks').textContent = weeks;
-    document.getElementById('days').textContent = days;
-    document.getElementById('hours').textContent = hours;
-    document.getElementById('minutes').textContent = minutes;
-    document.getElementById('seconds').textContent = seconds;
+    const year = now.getFullYear();
+    const halloween = new Date(year, 9, 31, 0, 0, 0);
+    return now > halloween ? new Date(year + 1, 9, 31, 0, 0, 0) : halloween;
   }
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  function updateCountdowns() {
+    const now = new Date();
+
+    // Noël
+    const christmas = getNextChristmas();
+    const diffNoel = christmas - now;
+    const monthsNoel = Math.floor(diffNoel / (1000 * 60 * 60 * 24 * 30.44)); 
+    const weeksNoel = Math.floor((diffNoel / (1000 * 60 * 60 * 24 * 7)) % 4.35);
+    const daysNoel = Math.floor((diffNoel / (1000 * 60 * 60 * 24)) % 7);
+    const hoursNoel = Math.floor((diffNoel % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    document.getElementById('monthsNoel').textContent = monthsNoel;
+    document.getElementById('weeksNoel').textContent = weeksNoel;
+    document.getElementById('daysNoel').textContent = daysNoel;
+    document.getElementById('hoursNoel').textContent = hoursNoel;
+
+    // Halloween
+    const halloween = getNextHalloween();
+    const diffHalloween = halloween - now;
+    const monthsHalloween = Math.floor(diffHalloween / (1000 * 60 * 60 * 24 * 30.44)); 
+    const weeksHalloween = Math.floor((diffHalloween / (1000 * 60 * 60 * 24 * 7)) % 4.35);
+    const daysHalloween = Math.floor((diffHalloween / (1000 * 60 * 60 * 24)) % 7);
+    const hoursHalloween = Math.floor((diffHalloween % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    document.getElementById('monthsHalloween').textContent = monthsHalloween;
+    document.getElementById('weeksHalloween').textContent = weeksHalloween;
+    document.getElementById('daysHalloween').textContent = daysHalloween;
+    document.getElementById('hoursHalloween').textContent = hoursHalloween;
+  }
+
+  updateCountdowns();
+  setInterval(updateCountdowns, 1000);
 </script>
 </body>
 </html>
