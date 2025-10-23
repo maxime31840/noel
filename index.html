@@ -18,17 +18,70 @@
     }
 
     html, body {
-        height: 100%;
-        font-family: 'Poppins', system-ui, sans-serif;
-        color: var(--text-light);
-        text-align: center;
-        overflow-x: hidden;
-        background: url('./image/noel-background.jpg') no-repeat center center fixed;
-        background-size: cover;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: background-image 0.6s ease-in-out;
+      height: 100%;
+      font-family: 'Poppins', system-ui, sans-serif;
+      color: var(--text-light);
+      text-align: center;
+      overflow-x: hidden;
+      background: url('./image/noel-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-image 0.6s ease-in-out;
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    header {
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      padding: 1rem 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      text-align: center;
+      z-index: 3;
+      animation: fadeDown 1s ease forwards;
+    }
+
+    header h2 {
+      font-size: 1.4rem;
+      color: var(--accent);
+      text-shadow: 0 0 8px rgba(251,191,36,0.5);
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: #e5e7eb;
     }
 
     .overlay {
@@ -36,17 +89,21 @@
       inset: 0;
       background: var(--bg-dark);
       z-index: 1;
+      animation: fadeIn 1.5s ease;
     }
 
     .container {
       position: relative;
       z-index: 2;
+      margin-top: 15rem;
+      margin-bottom: 5rem;
       padding: 2rem;
       border-radius: 1.5rem;
       backdrop-filter: blur(10px);
       background: rgba(255, 255, 255, 0.1);
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
       width: min(90%, 500px);
+      animation: fadeUp 1.2s ease forwards;
     }
 
     h1 {
@@ -95,14 +152,24 @@
     }
 
     footer {
-      margin-top: 1.5rem;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      text-align: center;
+      padding: 0.8rem 0;
       font-size: 0.8rem;
       color: #d1d5db;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 3;
+      animation: fadeUp 1.5s ease forwards;
     }
 
-    @keyframes snow {
-      0% { background-position: 0 0; }
-      100% { background-position: 0 1000px; }
+    footer span {
+      color: var(--accent);
+      text-shadow: 0 0 6px rgba(251,191,36,0.7);
     }
 
     @media (max-width: 480px) {
@@ -113,20 +180,27 @@
 </head>
 <body>
   <div class="overlay"></div>
-  <div class="container">
-    <h1>🎅 Compte à rebours avant Noël 🎄</h1>
-    <p>Le Père Noël polit déjà ses bottes… Voici combien de temps il te reste pour être sage :</p>
 
-    <div class="countdown">
-      <div class="unit"><div class="number" id="days">--</div><div class="label">Jours</div></div>
-      <div class="unit"><div class="number" id="hours">--</div><div class="label">Heures</div></div>
-      <div class="unit"><div class="number" id="minutes">--</div><div class="label">Minutes</div></div>
+  <header>
+    <h2>🎄 Noël approche !</h2>
+    <p>Prépare ton chocolat chaud et compte les jours ✨</p>
+  </header>
+
+    <div class="container">
+        <h1>🎅 Compte à rebours avant Noël 🎄</h1>
+        <p>Le Père Noël polit déjà ses bottes… Voici combien de temps il te reste pour être sage :</p>
+
+        <div class="countdown">
+        <div class="unit"><div class="number" id="days">--</div><div class="label">Jours</div></div>
+        <div class="unit"><div class="number" id="hours">--</div><div class="label">Heures</div></div>
+        <div class="unit"><div class="number" id="minutes">--</div><div class="label">Minutes</div></div>
+        <div class="unit"><div class="number" id="seconds">--</div><div class="label">Secondes</div></div>
     </div>
-
-    
-
-    <footer>✨ Joyeux Noël en avance ! ✨</footer>
   </div>
+
+  <footer>
+    <p>© <span>2025</span> — Créé avec 🎅 par <span>Maxime</span> • Joyeux Noël 🎁</p>
+  </footer>
 
 <script>
   function getNextChristmas() {
@@ -144,10 +218,12 @@
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
     document.getElementById('days').textContent = days;
     document.getElementById('hours').textContent = hours;
     document.getElementById('minutes').textContent = minutes;
+    document.getElementById('seconds').textContent = seconds;
   }
 
   updateCountdown();
