@@ -33,25 +33,13 @@
     }
 
     @keyframes fadeDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fadeIn {
@@ -102,7 +90,7 @@
       backdrop-filter: blur(10px);
       background: rgba(255, 255, 255, 0.1);
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      width: min(90%, 500px);
+      width: min(90%, 550px);
       animation: fadeUp 1.2s ease forwards;
     }
 
@@ -141,7 +129,7 @@
     }
 
     .number {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--accent);
     }
@@ -173,8 +161,8 @@
     }
 
     @media (max-width: 480px) {
-      .unit { width: 100px; padding: 0.7rem; }
-      .number { font-size: 2rem; }
+      .unit { width: 80px; padding: 0.7rem; }
+      .number { font-size: 1.8rem; }
     }
   </style>
 </head>
@@ -186,15 +174,17 @@
     <p>Prépare ton chocolat chaud et compte les jours ✨</p>
   </header>
 
-    <div class="container">
-        <h1>🎅 Compte à rebours avant Noël 🎄</h1>
-        <p>Le Père Noël polit déjà ses bottes… Voici combien de temps il te reste pour être sage :</p>
+  <div class="container">
+    <h1>🎅 Compte à rebours avant Noël 🎄</h1>
+    <p>Le Père Noël polit déjà ses bottes… Voici combien de temps il te reste pour être sage :</p>
 
-        <div class="countdown">
-        <div class="unit"><div class="number" id="days">--</div><div class="label">Jours</div></div>
-        <div class="unit"><div class="number" id="hours">--</div><div class="label">Heures</div></div>
-        <div class="unit"><div class="number" id="minutes">--</div><div class="label">Minutes</div></div>
-        <div class="unit"><div class="number" id="seconds">--</div><div class="label">Secondes</div></div>
+    <div class="countdown">
+      <div class="unit"><div class="number" id="months">--</div><div class="label">Mois</div></div>
+      <div class="unit"><div class="number" id="weeks">--</div><div class="label">Semaines</div></div>
+      <div class="unit"><div class="number" id="days">--</div><div class="label">Jours</div></div>
+      <div class="unit"><div class="number" id="hours">--</div><div class="label">Heures</div></div>
+      <div class="unit"><div class="number" id="minutes">--</div><div class="label">Minutes</div></div>
+      <div class="unit"><div class="number" id="seconds">--</div><div class="label">Secondes</div></div>
     </div>
   </div>
 
@@ -215,11 +205,15 @@
     const christmas = getNextChristmas();
     const diff = christmas - now;
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44)); // mois moyens
+    const weeks = Math.floor((diff / (1000 * 60 * 60 * 24 * 7)) % 4.35);
+    const days = Math.floor((diff / (1000 * 60 * 60 * 24)) % 7);
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
+    document.getElementById('months').textContent = months;
+    document.getElementById('weeks').textContent = weeks;
     document.getElementById('days').textContent = days;
     document.getElementById('hours').textContent = hours;
     document.getElementById('minutes').textContent = minutes;
