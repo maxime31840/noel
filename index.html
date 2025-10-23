@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Décompte jusqu'à Noël 🎅🎄</title>
+  <style>
+    :root {
+      --accent: #fbbf24;
+      --text-light: #f9fafb;
+      --bg-dark: rgba(0,0,0,0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+        height: 100%;
+        font-family: 'Poppins', system-ui, sans-serif;
+        color: var(--text-light);
+        text-align: center;
+        overflow-x: hidden;
+        background: url('./image/noel-background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-image 0.6s ease-in-out;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-dark);
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      width: min(90%, 500px);
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(251,191,36,0.6);
+    }
+
+    p {
+      color: #e5e7eb;
+      margin-bottom: 2rem;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: space-around;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .unit {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+      width: 90px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .unit:hover {
+      transform: scale(1.1);
+    }
+
+    .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .label {
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: #d1d5db;
+    }
+
+    @keyframes snow {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 1000px; }
+    }
+
+    .snow {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://i.imgur.com/KOBz6rR.png');
+      animation: snow 30s linear infinite;
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    @media (max-width: 480px) {
+      .unit { width: 70px; padding: 0.7rem; }
+      .number { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="snow"></div>
+  <div class="container">
+    <h1>🎅 Compte à rebours avant Noël 🎄</h1>
+    <p>Le Père Noël polit déjà ses bottes… Voici combien de temps il te reste pour être sage :</p>
+
+    <div class="countdown">
+      <div class="unit"><div class="number" id="days">--</div><div class="label">Jours</div></div>
+      <div class="unit"><div class="number" id="hours">--</div><div class="label">Heures</div></div>
+      <div class="unit"><div class="number" id="minutes">--</div><div class="label">Minutes</div></div>
+    </div>
+
+    
+
+    <footer>✨ Joyeux Noël en avance ! ✨</footer>
+  </div>
+
+<script>
+  function getNextChristmas() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const christmas = new Date(year, 11, 25, 0, 0, 0);
+    return now > christmas ? new Date(year + 1, 11, 25, 0, 0, 0) : christmas;
+  }
+
+  function updateCountdown() {
+    const now = new Date();
+    const christmas = getNextChristmas();
+    const diff = christmas - now;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById('days').textContent = days;
+    document.getElementById('hours').textContent = hours;
+    document.getElementById('minutes').textContent = minutes;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
