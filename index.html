@@ -193,10 +193,7 @@
       <p>Le Père Noël polit déjà ses bottes… Voici combien de temps il te reste pour être sage :</p>
 
       <div class="countdown">
-        <div class="unit"><div class="number" id="monthsNoel">--</div><div class="label">Mois</div></div>
-        <div class="unit"><div class="number" id="weeksNoel">--</div><div class="label">Semaines</div></div>
         <div class="unit"><div class="number" id="daysNoel">--</div><div class="label">Jours</div></div>
-        <div class="unit"><div class="number" id="hoursNoel">--</div><div class="label">Heures</div></div>
       </div>
     </div>
 
@@ -215,12 +212,25 @@
   </footer>
 
 <script>
+  // function getNextChristmas() {
+  //   const now = new Date();
+  //   const year = now.getFullYear();
+  //   const christmas = new Date(year, 11, 26, 0, 0, 0);
+  //   return now > christmas ? new Date(year + 1, 12, 25, 0, 0, 0) : christmas;
+  // }
   function getNextChristmas() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const christmas = new Date(year, 11, 25, 0, 0, 0);
-    return now > christmas ? new Date(year + 1, 12, 25, 0, 0, 0) : christmas;
+  const now = new Date();
+  const year = now.getFullYear();
+
+  const christmasThisYear = new Date(year, 11, 25, 0, 0, 0);
+
+  if (now > christmasThisYear) {
+    return new Date(year + 1, 11, 25, 0, 0, 0);
   }
+
+  return christmasThisYear;
+}
+
 
   function getNextBirthday() {
     const now = new Date();
@@ -235,23 +245,16 @@
   // 🎄 Noël
   const christmas = getNextChristmas();
   const diffNoel = christmas - now;
-  const monthsNoel = Math.floor(diffNoel / (1000 * 60 * 60 * 24 * 30.44));
-  const weeksNoel = Math.floor((diffNoel / (1000 * 60 * 60 * 24 * 7)) % 4.35);
-  const daysNoel = Math.floor((diffNoel / (1000 * 60 * 60 * 24)) % 7);
-  const hoursNoel = Math.floor((diffNoel % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-  document.getElementById('monthsNoel').textContent = monthsNoel;
-  document.getElementById('weeksNoel').textContent = weeksNoel;
+  const daysNoel = Math.floor(diffNoel / (1000 * 60 * 60 * 24));
   document.getElementById('daysNoel').textContent = daysNoel;
-  document.getElementById('hoursNoel').textContent = hoursNoel;
 
   // 🎂 Anniversaire
   const birthday = getNextBirthday();
   const diffBirthday = birthday - now;
   const daysBirthday = Math.floor(diffBirthday / (1000 * 60 * 60 * 24));
-
   document.getElementById('daysBirthday').textContent = daysBirthday;
 }
+
 
 updateCountdowns();
 setInterval(updateCountdowns, 1000);
